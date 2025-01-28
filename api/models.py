@@ -35,3 +35,8 @@ class DemandeConge(models.Model):
     def __str__(self):
         return f"{self.employe.user.username} - {self.type_conge.nom}"
 
+
+# RESTFUL API 
+#  Protocol HTTP, HTTPS 
+#  Method GET, POST, PUT, DELETE, PATCH, OPTIONS
+#  URL( endpoints) ex: http://127.0.0.1:8000/getDemandes/
