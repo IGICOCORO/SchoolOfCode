@@ -23,11 +23,11 @@
 #         form = DemandeCongeForm()
 #     return render(request, 'conges/creer_demande.html', {'form': form})
 
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins, generics
 from .serializers import *
 from .models import *
 
-class EmployeViewSet(viewsets.ModelViewSet):
+class EmployeViewSet(mixins.ListModelMixin,mixins.RetrieveModelMixin,viewsets.GenericViewSet ):
     queryset = Employe.objects.all()
     serializer_class = EmployeSerializer
 
