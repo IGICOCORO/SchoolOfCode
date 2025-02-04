@@ -23,18 +23,32 @@
 #         form = DemandeCongeForm()
 #     return render(request, 'conges/creer_demande.html', {'form': form})
 
-from rest_framework import viewsets, mixins, generics
+from rest_framework import viewsets, mixins, generics, permissions
 from .serializers import *
 from .models import *
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 
 class EmployeViewSet(mixins.ListModelMixin,mixins.RetrieveModelMixin,viewsets.GenericViewSet ):
     queryset = Employe.objects.all()
     serializer_class = EmployeSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = {
+        'user__username': ['exact'],
+        'user__first_name':['exact'],
+        'user__last_name':['exact'],
+        'poste': ['icontains'],
+        'date_embauche':['gte','lte', 'exact'],
+        
+    }
 
 class TypeCongeViewSet(viewsets.ModelViewSet):
     queryset = TypeConge.objects.all()
     serializer_class = TypeCongeSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 class DemandeCongeViewSet(viewsets.ModelViewSet):
     queryset = DemandeConge.objects.all()
     serializer_class = DemandeCongeSerializer
+    permission_classes = [permissions.IsAuthenticated]
